@@ -52,7 +52,7 @@ jobs:
         with:
           path: |
             ~/android-sdk
-          key: ${{ runner.os }}-android-sdk
+          key: ${{ runner.os }}-android-sdk-${{ matrix.api }}
       - name: Install Android SDK
         if: steps.cache-sdk.outputs.cache-hit != 'true'
         uses: malinskiy/action-android/install-sdk@release/0.0.6
