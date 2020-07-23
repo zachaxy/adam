@@ -18,6 +18,12 @@ jobs:
       - name: Install Android SDK
         if: steps.cache-sdk.outputs.cache-hit != 'true'
         uses: malinskiy/action-android/install-sdk@release/0.0.6
+      - name: Export envvars when using cached install step
+        if: steps.cache-sdk.outputs.cache-hit != 'false'
+        run: |
+          echo "::set-env name=ANDROID_HOME::$HOME/android-sdk"
+          echo "::set-env name=ANDROID_SDK_ROOT::$HOME/android-sdk"
+          echo "::set-env name=ANDROID_SDK_HOME::$HOME/android-sdk/sdk_home"
       - name: gradle test jacocoTestReport
         run: ./gradlew test jacocoTestReport
       - name: Save test output
@@ -56,6 +62,12 @@ jobs:
       - name: Install Android SDK
         if: steps.cache-sdk.outputs.cache-hit != 'true'
         uses: malinskiy/action-android/install-sdk@release/0.0.6
+      - name: Export envvars when using cached install step
+        if: steps.cache-sdk.outputs.cache-hit != 'false'
+        run: |
+          echo "::set-env name=ANDROID_HOME::$HOME/android-sdk"
+          echo "::set-env name=ANDROID_SDK_ROOT::$HOME/android-sdk"
+          echo "::set-env name=ANDROID_SDK_HOME::$HOME/android-sdk/sdk_home"
       - name: integration test
         uses: malinskiy/action-android/emulator-run-cmd@release/0.0.6
         timeout-minutes: 20
