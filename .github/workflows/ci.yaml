@@ -9,7 +9,15 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
-      - uses: malinskiy/action-android/install-sdk@release/0.0.6
+      - name: Cache Android SDK
+        id: cache-sdk
+        uses: actions/cache@v2
+        with:
+          path: ~/android-sdk
+          key: ${{ runner.os }}-android-sdk
+      - name: Install Android SDK
+        if: steps.cache-sdk.outputs.cache-hit != 'true'
+        uses: malinskiy/action-android/install-sdk@release/0.0.6
       - name: gradle test jacocoTestReport
         run: ./gradlew test jacocoTestReport
       - name: Save test output
